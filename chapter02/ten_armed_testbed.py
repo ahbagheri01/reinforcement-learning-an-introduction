@@ -166,12 +166,20 @@ def figure_2_3(runs=2000, time=1000):
 
 def figure_2_4(runs=2000, time=1000):
     bandits = []
+    bandits.append(Bandit(epsilon=0, UCB_param=8, sample_averages=True))
+    bandits.append(Bandit(epsilon=0, UCB_param=4, sample_averages=True))
     bandits.append(Bandit(epsilon=0, UCB_param=2, sample_averages=True))
+    bandits.append(Bandit(epsilon=0, UCB_param=1, sample_averages=True))
+    bandits.append(Bandit(epsilon=0, UCB_param=0.5, sample_averages=True))
     bandits.append(Bandit(epsilon=0.1, sample_averages=True))
     _, average_rewards = simulate(runs, time, bandits)
 
-    plt.plot(average_rewards[0], label='UCB $c = 2$')
-    plt.plot(average_rewards[1], label='epsilon greedy $\epsilon = 0.1$')
+    plt.plot(average_rewards[0], label='UCB $c = 8$')
+    plt.plot(average_rewards[0], label='UCB $c = 4$')
+    plt.plot(average_rewards[1], label='UCB $c = 2$')
+    plt.plot(average_rewards[2], label='UCB $c = 1$')
+    plt.plot(average_rewards[3], label='UCB $c = 0.5$')
+    plt.plot(average_rewards[4], label='epsilon greedy $\epsilon = 0.1$')
     plt.xlabel('Steps')
     plt.ylabel('Average reward')
     plt.legend()
@@ -209,10 +217,10 @@ def figure_2_6(runs=2000, time=1000):
                   lambda alpha: Bandit(gradient=True, step_size=alpha, gradient_baseline=True),
                   lambda coef: Bandit(epsilon=0, UCB_param=coef, sample_averages=True),
                   lambda initial: Bandit(epsilon=0, initial=initial, step_size=0.1)]
-    parameters = [np.arange(-7, -1, dtype=np.float),
-                  np.arange(-5, 2, dtype=np.float),
-                  np.arange(-4, 3, dtype=np.float),
-                  np.arange(-2, 3, dtype=np.float)]
+    parameters = [np.arange(-7, -1, dtype=np.float64),
+                  np.arange(-5, 2, dtype=np.float64),
+                  np.arange(-4, 3, dtype=np.float64),
+                  np.arange(-2, 3, dtype=np.float64)]
 
     bandits = []
     for generator, parameter in zip(generators, parameters):
@@ -236,9 +244,9 @@ def figure_2_6(runs=2000, time=1000):
 
 
 if __name__ == '__main__':
-    figure_2_1()
-    figure_2_2()
-    figure_2_3()
+    # figure_2_1()
+    # figure_2_2()
+    # figure_2_3()
     figure_2_4()
-    figure_2_5()
-    figure_2_6()
+    # figure_2_5()
+    # figure_2_6()
